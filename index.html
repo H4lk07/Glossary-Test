@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOTOBA LAB | 現代デジタル・AI・テクノロジー用語図鑑</title>
+  <meta name="description" content="AI・機械学習、モダンWeb、UI/UXデザインの最新技術用語を直感的に探求できる動的インタラクティブ用語辞典シングルページWebサイト。">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Noto Sans JP & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Light Orbs -->
+  <div class="bg-ambient-layer" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="app-header">
+    <div class="nav-container">
+      <a href="#" class="brand-wrapper" id="brand-home-link" aria-label="KOTOBA LAB トップへ">
+        <div class="brand-logo-badge" aria-hidden="true">言</div>
+        <div class="brand-text-group">
+          <span class="brand-name">
+            KOTOBA LAB
+            <span class="brand-version-badge">2026 Edition</span>
+          </span>
+          <span class="brand-tagline">デジタル＆テクノロジー動的用語辞典</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <!-- Bookmark Filter Toggle -->
+        <button type="button" class="btn-action" id="btn-toggle-bookmarks" aria-label="お気に入り用語のみ表示">
+          <span aria-hidden="true">♥</span>
+          <span class="btn-label">お気に入り</span>
+          <span class="badge-counter" id="bookmark-badge-count">0</span>
+        </button>
+
+        <!-- Mini Quiz Challenge Button -->
+        <button type="button" class="btn-action" id="btn-open-quiz" aria-label="1分ミニクイズを開始">
+          <span aria-hidden="true">⚡</span>
+          <span class="btn-label">1分クイズ</span>
+        </button>
+
+        <!-- Add Custom Term Button -->
+        <button type="button" class="btn-action btn-action-primary" id="btn-open-add-modal" aria-label="新しい用語を追加する">
+          <span aria-hidden="true">+</span>
+          <span class="btn-label">用語を追加</span>
+        </button>
+
+        <!-- Theme Mode Switcher -->
+        <button type="button" class="btn-action btn-icon-only" id="btn-toggle-theme" title="テーマ切り替え (ダーク / ライト)" aria-label="テーマ切り替え">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+    <!-- Hero Banner Section -->
+    <section class="hero-section" aria-labelledby="hero-heading">
+      <div class="hero-content">
+        <div class="hero-badge-pill">
+          <span class="hero-badge-dot"></span>
+          <span>インタラクティブ学習ポータル</span>
+        </div>
+        <h1 id="hero-heading" class="hero-title">
+          最先端の<span class="hero-gradient-text">テクノロジー用語</span>を<br>直感的に理解する
+        </h1>
+        <p class="hero-description">
+          生成AI、モダンWeb標準、UI/UXデザイン、次世代トレンドまで。日本語による詳細解説、実用ユースケース、音声読み上げ、理解度クイズを備えた動的シングルページ辞典です。
+        </p>
+
+        <!-- Live Statistics Counter -->
+        <div class="hero-metrics-bar">
+          <div class="metric-item">
+            <span class="metric-number" id="metric-total-terms">0</span>
+            <span class="metric-label">総収録用語</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number" id="metric-categories-count">4</span>
+            <span class="metric-label">主要カテゴリ</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number" id="metric-total-views">24.5k</span>
+            <span class="metric-label">累計アクセス</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual-card">
+        <img 
+          src="assets/hero-banner.jpg" 
+          alt="KOTOBA LAB 未来知識ネットワークのビジュアルアート" 
+          class="hero-banner-image"
+          width="800"
+          height="450"
+          fetchpriority="high"
+        >
+        <div class="hero-image-overlay">
+          <span class="hero-image-caption">
+            <span>❖</span> 知識のノードをつなぎ、未来を可視化する
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learning Progress Bar Widget -->
+    <section class="learning-tracker-card" aria-label="学習進捗ステータス">
+      <div class="tracker-left">
+        <span class="tracker-icon" aria-hidden="true">📈</span>
+        <div class="tracker-details">
+          <div class="tracker-label-row">
+            <span>学習マスター度（詳細閲覧・保存済み）</span>
+            <span class="tracker-percent" id="tracker-percent-text">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="tracker-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tracker-quick-stats">
+        <span class="tracker-pill" id="tracker-viewed-pill">
+          <span aria-hidden="true">👁</span> <span id="tracker-viewed-count">0</span> 件閲覧
+        </span>
+        <span class="tracker-pill" id="tracker-bookmarked-pill">
+          <span aria-hidden="true">♥</span> <span id="tracker-bookmarked-count">0</span> 件保存
+        </span>
+      </div>
+    </section>
+
+    <!-- Interactive Search and Filter Toolbar -->
+    <section class="toolbar-section" aria-label="検索とフィルター">
+      <!-- Search Input Row -->
+      <div class="search-and-presets-row">
+        <div class="search-input-wrapper">
+          <span class="search-icon-decor" aria-hidden="true">🔍</span>
+          <input 
+            type="search" 
+            id="glossary-search" 
+            class="glossary-search-input" 
+            placeholder="用語名、読みがな、英語名、キーワードでリアルタイム検索... (例: RAG, ベクトル, デザイン)" 
+            autocomplete="off"
+            aria-label="用語を検索"
+          >
+          <button type="button" class="search-clear-btn" id="btn-clear-search" aria-label="検索ワードを消去">✕</button>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="category-tabs-container" role="tablist" aria-label="カテゴリ切り替え" id="category-tabs">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Sub Filters: Tag Chips & View Mode Controls -->
+      <div class="sub-filter-row">
+        <div class="tag-filter-chips" id="tag-filter-chips" aria-label="タグ絞り込み">
+          <button type="button" class="filter-chip active" data-tag="all">すべてのタグ</button>
+          <button type="button" class="filter-chip" data-tag="トレンド">トレンド</button>
+          <button type="button" class="filter-chip" data-tag="実践的">実践的</button>
+          <button type="button" class="filter-chip" data-tag="必修">必修・基礎</button>
+          <button type="button" class="filter-chip" data-tag="インフラ">インフラ</button>
+        </div>
+
+        <div class="view-and-sort-controls">
+          <label for="sort-select" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">並び替え</label>
+          <select id="sort-select" class="sort-select" aria-label="表示順の並び替え">
+            <option value="popular">注目・人気順</option>
+            <option value="furigana">50音順 (あいうえお)</option>
+            <option value="recent">新着順</option>
+          </select>
+
+          <!-- Grid / List Switcher -->
+          <div class="view-mode-toggle" role="group" aria-label="レイアウト切り替え">
+            <button type="button" class="view-toggle-btn active" id="btn-view-grid" title="グリッド表示" aria-label="カードグリッド表示">⊞</button>
+            <button type="button" class="view-toggle-btn" id="btn-view-list" title="リスト表示" aria-label="リスト表示">☰</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Status Indicator -->
+    <div class="results-indicator-bar" id="results-bar">
+      <div>
+        表示中: <span class="results-count-bold" id="results-count">0</span> 件の用語
+      </div>
+      <button type="button" class="filter-reset-link" id="btn-reset-filters" style="display: none;">フィルターを全解除</button>
+    </div>
+
+    <!-- Dynamic Glossary Cards Grid Container -->
+    <section class="glossary-cards-container" id="glossary-grid" aria-live="polite">
+      <!-- Cards rendered dynamically via JavaScript -->
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       NATIVE HTML DIALOG: Term Detail Modal
+       ========================================================================= -->
+  <dialog class="custom-modal" id="term-detail-dialog" aria-labelledby="detail-dialog-title" closedby="any">
+    <div class="modal-header-bar">
+      <div class="modal-title-group">
+        <div class="modal-badge-row">
+          <span class="card-category-tag" id="detail-category-tag">カテゴリ</span>
+          <span class="tag-mini" id="detail-level-tag">難易度</span>
+        </div>
+        <p class="term-furigana" id="detail-furigana">ふりがな</p>
+        <h2 class="modal-title" id="detail-dialog-title">用語タイトル</h2>
+        <p class="modal-en-title" id="detail-en-title">English Term Name</p>
+      </div>
+
+      <div class="modal-actions-bar">
+        <button type="button" class="btn-card-fav" id="detail-btn-fav" aria-label="お気に入りに登録" title="お気に入り登録">♥</button>
+        <button type="button" class="btn-modal-close" id="btn-close-detail" aria-label="閉じる">✕</button>
+      </div>
+    </div>
+
+    <div class="modal-body-content">
+      <!-- Web Speech Pronunciation Bar -->
+      <div class="audio-pronounce-card">
+        <div class="audio-pronounce-left">
+          <button type="button" class="btn-action" id="btn-play-speech" aria-label="日本語の発音を聞く">
+            <span aria-hidden="true">🔊</span> 日本語音声を発音
+          </button>
+          <div class="soundwave-animation" id="audio-soundwave" aria-hidden="true">
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+          </div>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--text-tertiary);">Web Speech API 日本語合成音声</span>
+      </div>
+
+      <!-- Overview Section -->
+      <div class="modal-section-block">
+        <h3 class="modal-section-heading"><span>📖</span> 概要と詳細定義</h3>
+        <p class="modal-text-lead" id="detail-full-definition">詳細な説明が入ります...</p>
+      </div>
+
+      <!-- Real-world Application / Practical Use -->
+      <div class="modal-section-block">
+        <h3 class="modal-section-heading"><span>💡</span> 実践ユースケース・導入事例</h3>
+        <p class="modal-text-lead" id="detail-practical-use">実際のビジネスや開発現場での使われ方...</p>
+      </div>
+
+      <!-- Pros and Cons -->
+      <div class="modal-section-block">
+        <h3 class="modal-section-heading"><span>⚖️</span> メリットと留意点・課題</h3>
+        <div class="merit-demerit-grid">
+          <div class="merit-box">
+            <div class="box-title-merit"><span>✔</span> 主なメリット・利点</div>
+            <ul class="box-bullet-list" id="detail-advantages-list"></ul>
+          </div>
+          <div class="demerit-box">
+            <div class="box-title-demerit"><span>⚠️</span> 留意すべき課題・制約</div>
+            <ul class="box-bullet-list" id="detail-challenges-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Optional Code or Architecture Snippet -->
+      <div class="modal-section-block" id="detail-code-block-wrapper" style="display: none;">
+        <h3 class="modal-section-heading"><span>💻</span> 実装コンセプト / コードサンプル</h3>
+        <pre class="code-box-wrapper"><code id="detail-code-content"></code></pre>
+      </div>
+
+      <!-- Related Terms Navigation -->
+      <div class="modal-section-block" id="detail-related-wrapper">
+        <h3 class="modal-section-heading"><span>🔗</span> 関連用語（クリックでジャンプ）</h3>
+        <div class="related-terms-cloud" id="detail-related-cloud"></div>
+      </div>
+    </div>
+
+    <div class="modal-footer-bar">
+      <div style="font-size: 0.85rem; color: var(--text-tertiary);">
+        閲覧回数: <span id="detail-views-count" style="font-weight: 700; color: var(--text-primary);">0</span> 回
+      </div>
+      <div style="display: flex; gap: 0.75rem;">
+        <button type="button" class="btn-action" id="btn-copy-term-markdown">
+          <span>📋</span> 定義をコピー
+        </button>
+        <button type="button" class="btn-action btn-action-primary" id="btn-close-detail-footer">
+          閉じる
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- =========================================================================
+       NATIVE HTML DIALOG: 1-Minute Quiz Challenge
+       ========================================================================= -->
+  <dialog class="custom-modal" id="quiz-dialog" aria-labelledby="quiz-dialog-title" closedby="any">
+    <div class="modal-header-bar">
+      <div class="modal-title-group">
+        <div class="modal-badge-row">
+          <span class="card-category-tag">🧠 ナレッジチェック</span>
+          <span class="tag-mini">全問ランダム出題</span>
+        </div>
+        <h2 class="modal-title" id="quiz-dialog-title">1分理解ミニクイズ</h2>
+        <p class="modal-en-title">Test your modern tech understanding</p>
+      </div>
+      <button type="button" class="btn-modal-close" id="btn-close-quiz" aria-label="閉じる">✕</button>
+    </div>
+
+    <div class="modal-body-content">
+      <div class="quiz-container">
+        <div class="quiz-header-status">
+          <div style="font-weight: 700; color: var(--text-secondary); font-size: 0.9rem;">
+            問題: <span id="quiz-progress-text" style="color: var(--accent-cyan); font-weight: 800;">1 / 5</span>
+          </div>
+          <div style="font-weight: 700; color: var(--text-primary); font-size: 0.9rem;">
+            スコア: <span id="quiz-score-text" style="color: var(--accent-emerald); font-weight: 800;">0 点</span>
+          </div>
+        </div>
+
+        <div class="quiz-question-box">
+          <div class="quiz-question-label">質問</div>
+          <p class="quiz-question-text" id="quiz-question-content">質問がここに表示されます...</p>
+        </div>
+
+        <div class="quiz-options-list" id="quiz-options-container">
+          <!-- Dynamically generated options -->
+        </div>
+
+        <div class="quiz-feedback-box" id="quiz-feedback">
+          <!-- Instant feedback -->
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer-bar">
+      <button type="button" class="btn-action" id="btn-quiz-next" style="display: none;">
+        次の問題へ ➔
+      </button>
+      <button type="button" class="btn-action btn-action-primary" id="btn-quiz-restart" style="display: none;">
+        もう一度挑戦する
+      </button>
+    </div>
+  </dialog>
+
+  <!-- =========================================================================
+       NATIVE HTML DIALOG: Add Custom Term Modal
+       ========================================================================= -->
+  <dialog class="custom-modal" id="add-term-dialog" aria-labelledby="add-term-dialog-title" closedby="any">
+    <div class="modal-header-bar">
+      <div class="modal-title-group">
+        <div class="modal-badge-row">
+          <span class="card-category-tag">➕ ナレッジ追加</span>
+        </div>
+        <h2 class="modal-title" id="add-term-dialog-title">新しい用語の登録</h2>
+        <p class="modal-en-title">Add custom term to your interactive library</p>
+      </div>
+      <button type="button" class="btn-modal-close" id="btn-close-add-modal" aria-label="閉じる">✕</button>
+    </div>
+
+    <form id="add-term-form" method="dialog">
+      <div class="modal-body-content">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="new-term-title">用語名 (必須) *</label>
+            <input type="text" id="new-term-title" class="form-input" required placeholder="例: CoT（思考の連鎖）">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-term-furigana">読みがな (必須) *</label>
+            <input type="text" id="new-term-furigana" class="form-input" required placeholder="例: しこうのれんさ">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-term-en">英語名 / 略称 (必須) *</label>
+            <input type="text" id="new-term-en" class="form-input" required placeholder="例: Chain-of-Thought Prompting">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-term-category">カテゴリ (必須) *</label>
+            <select id="new-term-category" class="form-select" required>
+              <option value="ai">AI・機械学習</option>
+              <option value="web">モダンWeb・クラウド</option>
+              <option value="design">UI/UXデザイン</option>
+              <option value="trend">次世代トレンド</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-term-level">難易度</label>
+            <select id="new-term-level" class="form-select">
+              <option value="初級">初級</option>
+              <option value="中級" selected>中級</option>
+              <option value="上級">上級</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-term-tags">タグ (カンマ区切り)</label>
+            <input type="text" id="new-term-tags" class="form-input" placeholder="例: トレンド, 実践的, プロンプト">
+          </div>
+
+          <div class="form-group form-group-full">
+            <label class="form-label" for="new-term-summary">要約（1行サマリー） *</label>
+            <input type="text" id="new-term-summary" class="form-input" required placeholder="一言で表す簡潔な説明...">
+          </div>
+
+          <div class="form-group form-group-full">
+            <label class="form-label" for="new-term-definition">詳細定義 *</label>
+            <textarea id="new-term-definition" class="form-textarea" required placeholder="詳細な技術解説や仕組み..."></textarea>
+          </div>
+
+          <div class="form-group form-group-full">
+            <label class="form-label" for="new-term-practical">実践ユースケース</label>
+            <textarea id="new-term-practical" class="form-textarea" placeholder="現場やプロダクトでの具体的な活用例..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-bar">
+        <button type="button" class="btn-action" id="btn-cancel-add">キャンセル</button>
+        <button type="submit" class="btn-action btn-action-primary" id="btn-submit-add">用語を保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Page Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div style="font-weight: 800; font-size: 1.1rem; color: var(--text-primary);">
+        KOTOBA LAB <span style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 600;">WORDS & CONCEPTS</span>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 500px;">
+        現代のデジタルイノベーションを加速するための日本語動的ナレッジプラットフォーム。
+      </p>
+      <ul class="footer-nav">
+        <li><a href="#glossary-search">用語検索</a></li>
+        <li><a href="#" id="footer-all-categories">全カテゴリ</a></li>
+        <li><a href="#" id="footer-quiz-trigger">ミニクイズ</a></li>
+      </ul>
+      <div class="footer-copy">
+        &copy; 2026 KOTOBA LAB. Designed for modern web explorations.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
